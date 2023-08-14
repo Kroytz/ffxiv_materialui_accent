@@ -432,16 +432,20 @@ namespace MaterialUI {
 		}
 		
 		public void Update() {
+			string noticeString = "";
 			Task.Run(async() => {
 				main.CheckPenumbra();
 				if(main.penumbraIssue != null)
 					return;
 
-                main.ui.ShowNotice("Loading " + repoMaster);
+				noticeString += "Loading " + repoMaster + "\n";
+                main.ui.ShowNotice(noticeString);
 				string resp = await httpClient.GetStringAsync(String.Format("https://api.github.com/repos/{0}/git/trees/master?recursive=1", repoMaster));
                 Dictionary<string, string> errorException = JsonConvert.DeserializeObject<Dictionary<string, string>>(resp); // API rate limit exceeded exception
 				if (errorException != null || errorException["message"] != null)
 				{
+                    noticeString += "Error occured on access github API: " + errorException["message"] + "\n";
+                    main.ui.ShowNotice(noticeString);
                     PluginLog.LogError(new JsonReaderException(), "Error occured on access github API: " + errorException["message"]);
                 }
 				else
@@ -452,11 +456,14 @@ namespace MaterialUI {
 
 				errorException.Clear();
 				
-				main.ui.ShowNotice("Loading " + repoAccent);
-				resp = await httpClient.GetStringAsync(String.Format("https://api.github.com/repos/{0}/git/trees/master?recursive=1", repoAccent));
+                noticeString += "Loading " + repoAccent + "\n";
+                main.ui.ShowNotice(noticeString);
+                resp = await httpClient.GetStringAsync(String.Format("https://api.github.com/repos/{0}/git/trees/master?recursive=1", repoAccent));
                 errorException = JsonConvert.DeserializeObject<Dictionary<string, string>>(resp); // API rate limit exceeded exception
                 if (errorException != null || errorException["message"] != null)
                 {
+                    noticeString += "Error occured on access github API: " + errorException["message"] + "\n";
+                    main.ui.ShowNotice(noticeString);
                     PluginLog.LogError(new JsonReaderException(), "Error occured on access github API: " + errorException["message"]);
                 }
                 else
