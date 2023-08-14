@@ -1,3 +1,8 @@
+## 项目说明
+skotlex 的 MaterialUI 在 6.4 版本将停止维护, 但我不会基于TexTools做Mod, 而且Sevii版本在XLauncherCN by OtterCorp版本无法正常跑通, 我决定魔改一个本地版本并持续同步更新.
+
+---
+## FFXIV MaterialUI Accent
 Check out Material UI by skotlex [here](https://github.com/skotlex/ffxiv-material-ui)
 
 ![preview](images/preview.png)
